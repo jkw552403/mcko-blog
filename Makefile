@@ -38,6 +38,7 @@ help:
 	@echo '                                                                          '
 
 html:
+	peru sync
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
 
 clean:
