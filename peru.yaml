@@ -1,0 +1,5 @@
+imports:
+  elegant: blog-theme/elegant
+
+git module elegant:
+  url: git://github.com/Pelican-Elegant/elegant
