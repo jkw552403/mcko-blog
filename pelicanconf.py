@@ -4,15 +4,20 @@ from __future__ import unicode_literals
 
 import pathlib
 
+root_path = pathlib.Path(__file__).parent
+
 AUTHOR = 'Mcko'
 SITENAME = 'Writing for Writing'
 SITEURL = 'https://mcko.me'
+
+PLUGINS = ['i18n_subsites'] 
+PLUGIN_PATHS = [str(root_path.joinpath('plugins'))]
 
 PATH = 'content'
 
 TIMEZONE = 'Asia/Tokyo'
 
-THEME = str(pathlib.Path(__file__).parent.joinpath('blog-theme/elegant/').absolute())
+THEME = str(root_path.joinpath('blog-theme/elegant/').absolute())
 
 DEFAULT_LANG = 'zh-tw'
 
@@ -37,3 +42,8 @@ DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+# i18n
+I18N_SUBSITES = {
+    'en': {'THEME': THEME}
+    }

@@ -149,3 +149,6 @@ dmypy.json
 
 # Local Netlify folder
 .netlify
+
+# blog theme folder managed by peru
+blog-theme
