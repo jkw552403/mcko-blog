@@ -47,3 +47,6 @@ DEFAULT_PAGINATION = 10
 I18N_SUBSITES = {
     'en': {'THEME': THEME}
     }
+
+# Google Analytics
+GOOGLE_ANALYTICS = 'UA-68128263-2'
