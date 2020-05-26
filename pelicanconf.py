@@ -10,7 +10,7 @@ AUTHOR = 'Mcko'
 SITENAME = "Mcko's blog"
 SITEURL = 'https://mcko.me'
 
-PLUGINS = ['i18n_subsites']
+PLUGINS = ['i18n_subsites', 'cjk-auto-spacing']
 PLUGIN_PATHS = [str(root_path.joinpath('plugins'))]
 
 PATH = 'content'
