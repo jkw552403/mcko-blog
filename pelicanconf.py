@@ -7,10 +7,10 @@ import pathlib
 root_path = pathlib.Path(__file__).parent
 
 AUTHOR = 'Mcko'
-SITENAME = 'Writing for Writing'
+SITENAME = "Mcko's blog"
 SITEURL = 'https://mcko.me'
 
-PLUGINS = ['i18n_subsites'] 
+PLUGINS = ['i18n_subsites']
 PLUGIN_PATHS = [str(root_path.joinpath('plugins'))]
 
 PATH = 'content'
@@ -50,3 +50,6 @@ I18N_SUBSITES = {
 
 # Google Analytics
 GOOGLE_ANALYTICS = 'UA-68128263-2'
+
+# Disqus
+DISQUS_SITENAME = 'mckos-blog'
