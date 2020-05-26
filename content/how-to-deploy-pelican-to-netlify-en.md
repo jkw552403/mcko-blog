@@ -1,10 +1,111 @@
 ---
 Title: How to deploy Pelican to Netlify
-Date: 2020-04-26 20:00
+Date: 2020-05-26 20:00
 Category: Blogging
 Tag: Pelican,Netlify,Blog
 Slug: how-to-deploy-pelican-to-netlify
 Lang: en
 ---
 
-WIP in en
+This article walks through how to deploy Pelican to Netlify. You will know how I built this blog step by step.
+
+# Why Pelican and Netlify
+
+As a developer, I prefer static site generators supporting Markdown. There are still many choices, including some fancy ones like [GatsbyJS]([https://www.gatsbyjs.org/](https://www.gatsbyjs.org/)). Among those choices, Pelican has supports themes and plugin ecosystems so you reuse others' themes or set up Disqus easily. The most important is Pelican is written in Python, which means I might be able to fix problems by myself.
+
+[Netlify]([https://www.netlify.com/](https://www.netlify.com/)) is a service that enables users to build and deploy sites **in** seconds. It already integrated with several Git hosting services so you can deploy your GitHub repository by a few clicks. Netlify also provides a [CLI tool]([https://docs.netlify.com/cli/get-started/](https://docs.netlify.com/cli/get-started/)) for CLI enthusiasts. One of the alternatives here is [GitHub Pages]([https://pages.github.com/](https://pages.github.com/)). It looks good and supports configuring custom domains and HTTPS. I think it could be very flexible with [GitHub Actions]([https://github.com/peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages)). But I picked Netlify here because I want to try something new :)
+
+# Pelican
+
+I followed [Quickstart]([https://docs.getpelican.com/en/stable/quickstart.html](https://docs.getpelican.com/en/stable/quickstart.html)) in Pelican document to initialize the project. The `pelican-quickstart` command will ask you to answer some basic settings including the blog title, domain name, etc. One setting is `Do you want to generate a tasks.py/Makefile to automate generation and publishing?` . I selected yes here, and I'll update this Makefile in the next section. This Makefile has provided several usages,  and I'll let Netlify execute `make html` and build static files.
+
+You may want to customize the appearance of your blog and include some common blog features like RSS. The Pelican community already built a lot of [themes]([https://github.com/getpelican/pelican-themes](https://github.com/getpelican/pelican-themes)) and [plugins]([https://github.com/getpelican/pelican-plugins](https://github.com/getpelican/pelican-plugins)). To build our blog with themes and plugins, we need to link the theme files and plugin files by specifying paths in `pelicanconf.py`. My solution here is to include theme and plugin code in the repository. This can be done by `git submodule/subtree`. I use a tool called [peru]([https://github.com/buildinspace/peru](https://github.com/buildinspace/peru)) to handle this. You can manage external repositories using a single YAML file. I'll include a theme repository and the official plugin repository here. I use [Elegant]([https://elegant.oncrashreboot.com/](https://elegant.oncrashreboot.com/)) as my blog theme, and I only pull code from the [Elegant repository]([https://github.com/Pelican-Elegant/elegant.git](https://github.com/Pelican-Elegant/elegant.git)) instead of the official theme repository to include less external code. You can read the following `peru.yaml` to see the usage. Also, I add `peru sync` to `make html` section in `Makefile` to ask Netlify to pull the latest code in the building process.
+
+```yaml
+# peru.yaml
+imports:
+  elegant: blog-theme/elegant
+  plugins: plugins
+
+git module elegant:
+  url: git://github.com/Pelican-Elegant/elegant
+
+git module plugins:
+  url: git://github.com/getpelican/pelican-plugins
+  recursive: true
+```
+
+```makefile
+# Makefile
+html:
+    peru sync && $(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
+```
+
+Then, we set up theme and plugin paths in `pelicanconf.py`.
+
+```python
+# pelicanconf.py
+...
+root_path = pathlib.Path(__file__).parent
+
+PLUGIN_PATHS = [str(root_path.joinpath('plugins'))]
+THEME = str(root_path.joinpath('blog-theme/elegant/').absolute())
+...
+```
+
+Before deploying to Netlify, I suggest you build the local site first to check. Please note that you must have at least one post in `content` folder to build the blog successfully. If you meet any problems here, please read the document of Pelican CLI tool. lt provides several useful options like `--relative-urls` or `--autorealod` to help users debug.
+
+# Netlify
+
+Before setting up the Netlify project, we need to prepare two files in the project root folder for the Python environment:
+
+1. [requirements.txt]([https://github.com/jkw552403/mcko-blog/blob/8c08bbb60ddfc786588c22b1f8a241b52b33384f/requirements.txt](https://github.com/jkw552403/mcko-blog/blob/8c08bbb60ddfc786588c22b1f8a241b52b33384f/requirements.txt)): for specifying Python dependencies. They are from Pelican and peru, and my `requirements.txt` is generated by `pip freeze`. 
+2. [runtime.txt]([https://github.com/jkw552403/mcko-blog/blob/8c08bbb60ddfc786588c22b1f8a241b52b33384f/runtime.txt](https://github.com/jkw552403/mcko-blog/blob/8c08bbb60ddfc786588c22b1f8a241b52b33384f/runtime.txt)): for specifying Python version. At the time of writing, the latest version Netlify supports is Python 3.7.
+
+```
+# requirements.txt
+blinker==1.4
+docopt==0.6.2
+docutils==0.16
+feedgenerator==1.9.1
+Jinja2==2.11.2
+Markdown==3.1.1
+MarkupSafe==1.1.1
+pelican==4.2.0
+peru==1.2.0
+Pygments==2.6.1
+python-dateutil==2.8.1
+pytz==2019.3
+PyYAML==5.3.1
+six==1.14.0
+Unidecode==1.1.1
+```
+
+```
+# runtime.txt
+3.7
+```
+
+Then we can put all these files to a git repository on GitHub (or other git hosting services) and configure the Netlify project. I follow the guide [here]([https://docs.netlify.com/cli/get-started](https://docs.netlify.com/cli/get-started)) to set up the project using Netlify CLI.
+
+```bash
+# Install netlify cli
+npm install netlify-cli -g
+# Log in with Netlify. This command will open a browser
+# and you need to grant access to Netlify CLI
+netlify login
+# Set up Netlify project
+netlify init
+```
+
+`netlify init` will ask you to enter some configurations including which GitHub team to use, the site name, and the build command. We can input `make html` for the build command to utilize the Makefile we created in the previous section.
+
+# Extras
+
+**Custom domain**: you can go to **Settings → Domain Management** on Netlify, and click **Add domain alias** to set up yours. The screenshot below is my current configuration.
+
+![Netlify-setting.png]({filename}/images/Netlify-setting.png)
+
+**Integrations with 3rd-party tools**: for example, if you need Google Analytics, you can put your tracking ID to the `GOOGLE_ANALYTICS` variable in `pelicanconf.py`. Please read the official documentation for further details or have a look at the plugins if the Pelican doesn't support your needs natively.
+
+All of these configurations files are put to [this repository](https://github.com/jkw552403/mcko-blog). Hopefully you can set up a new blog using Pelican and Netlify now. Feel free to let me know if you meet any problems!
