@@ -2,7 +2,7 @@
 Title: 如何在Netlify上部署以Pelican搭建的靜態網站
 Date: 2020-05-26 20:00
 Category: Blogging
-Tag: Pelican,Netlify,Blog
+Tags: Pelican,Netlify,Blog
 Slug: how-to-deploy-pelican-to-netlify
 Lang: zh-tw
 ---

@@ -2,7 +2,7 @@
 Title: Zettelkasten筆記法介紹
 Date: 2020-06-22 22:30
 Category: Knowledge Management
-Tag: Zettelkasten,Note
+Tags: Zettelkasten,Note
 Slug: introduce-zettelkasten
 Lang: zh-tw
 ---

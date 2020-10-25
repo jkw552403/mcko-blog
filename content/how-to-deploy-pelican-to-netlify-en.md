@@ -2,7 +2,7 @@
 Title: How to deploy Pelican to Netlify
 Date: 2020-05-26 20:00
 Category: Blogging
-Tag: Pelican,Netlify,Blog
+Tags: Pelican,Netlify,Blog
 Slug: how-to-deploy-pelican-to-netlify
 Lang: en
 ---
