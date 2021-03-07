@@ -104,7 +104,7 @@ netlify init
 
 網域設定：可以從Netlify的專案設定頁上找 **Settings → Domain Management** 然後點擊 **Add domain** **alias** 設定你想設定的網域。底下是我現在的配置。
 
-![Netlify-setting.png]({filename}/images/Netlify-setting.png)
+![Netlify-setting.png]({static}/images/Netlify-setting.png)
 
 整合第三方工具: 如果你需要 Google Analytics，可以透過在 `pelicanconf.py` 中 `GOOGLE_ANALYTICS` 這個變數來設定你的tracking ID。細節可以參考官方文件或者是找找看外掛如果官方不支援你想使用的工具。
 

@@ -104,7 +104,7 @@ netlify init
 
 **Custom domain**: you can go to **Settings → Domain Management** on Netlify, and click **Add domain alias** to set up yours. The screenshot below is my current configuration.
 
-![Netlify-setting.png]({filename}/images/Netlify-setting.png)
+![Netlify-setting.png]({static}/images/Netlify-setting.png)
 
 **Integrations with 3rd-party tools**: for example, if you need Google Analytics, you can put your tracking ID to the `GOOGLE_ANALYTICS` variable in `pelicanconf.py`. Please read the official documentation for further details or have a look at the plugins if the Pelican doesn't support your needs natively.
 
