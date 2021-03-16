@@ -98,7 +98,7 @@ Please read the official documentation [here](https://asdf-vm.com/#/core-manage-
 #### Set up Python plugin
 You will need to install the Python plugin first:
 ```bash
-asdf install python
+asdf plugin-add python
 ```
 
 #### Install a Python version

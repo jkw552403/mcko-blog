@@ -95,7 +95,7 @@ brew install asdf
 #### 設定 Python plugin
 在正式安裝Python之前，會先需要設定Python plugin：
 ```bash
-asdf install python
+asdf plugin-add python
 ```
 
 #### 安裝某個Python版本
