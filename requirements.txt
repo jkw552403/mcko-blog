@@ -10,6 +10,6 @@ peru==1.2.0
 Pygments==2.6.1
 python-dateutil==2.8.1
 pytz==2019.3
-PyYAML==5.3.1
+PyYAML==5.4
 six==1.14.0
 Unidecode==1.1.1
