@@ -58,3 +58,6 @@ DISQUS_SITENAME = 'mckos-blog'
 FEED_MAX_ITEMS = 15
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
+
+# Landing page
+LANDING_PAGE_TITLE = 'Learning to learn'
