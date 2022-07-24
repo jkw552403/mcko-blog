@@ -3,8 +3,8 @@ imports:
   plugins: plugins
 
 git module elegant:
-  url: git://github.com/Pelican-Elegant/elegant
+  url: https://github.com/Pelican-Elegant/elegant
 
 git module plugins:
-  url: git://github.com/getpelican/pelican-plugins
+  url: https://github.com/getpelican/pelican-plugins
   recursive: true
